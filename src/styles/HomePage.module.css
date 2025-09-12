@@ -1,0 +1,9 @@
+.wrapper {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: radial-gradient(#aaa 2px, transparent 2px);
+    background-size: 60px 60px; /* distance between dots */
+}
