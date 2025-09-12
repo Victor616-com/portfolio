@@ -5,6 +5,7 @@ const HomePage = () => {
     return (
         <div className={styles.wrapper}>
             <Cards></Cards>
+            <div className={styles.testSpacer}></div>
         </div>
     );
 }

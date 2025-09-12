@@ -2,6 +2,16 @@
     --card-height: 260px;
     --card-width: 430px; 
 }
+.container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: radial-gradient(#aaa 2px, transparent 2px);
+    background-size: 60px 60px; /* distance between dots */
+    position: fixed;
+}
 .card {
     width: var(--card-width);
     height: var(--card-height);
@@ -77,6 +87,7 @@
 
 
 
+
 .wobble {
   -webkit-animation: wobble 1s infinite;
   animation: wobble 1s infinite;
@@ -97,5 +108,13 @@
   }
   100% {
     transform: rotate(-1deg) translate3d(-1px, -1px, 0);
+  }
+}
+
+
+@media (max-width: 660px) {
+  .card {
+    transform: scale(0.8);       /* scale card and all children */
+    transform-origin: top center; /* anchor the scaling */
   }
 }
