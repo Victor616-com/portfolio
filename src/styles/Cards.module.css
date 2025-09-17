@@ -11,6 +11,25 @@
     background-image: radial-gradient(#aaa 2px, transparent 2px);
     background-size: 60px 60px; /* distance between dots */
     position: fixed;
+    
+}
+.dragMe {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 9px;
+    position: absolute;
+    z-index: 10;
+    transition: opacity 0.2s ease;
+}
+.dragMe.hidden {
+  opacity: 0; /* fade out */
+  pointer-events: none;
+}
+
+.dragMe p {
+    transform: rotate(-10deg) translateX(-10px)
 }
 .card {
     width: var(--card-width);
@@ -91,6 +110,7 @@
 .wobble {
   -webkit-animation: wobble 1s infinite;
   animation: wobble 1s infinite;
+  transform-origin: center center;
 }
 
 @keyframes wobble {
@@ -98,16 +118,16 @@
     transform: rotate(0) translate3d(0, 0, 0);
   }
   25% {
-    transform: rotate(1deg) translate3d(1px, 0, 0);
+    transform: rotate(1deg) translate3d(0, 0, 0);
   }
   50% {
-    transform: rotate(-1deg) translate3d(0, -1px, 0);
+    transform: rotate(-1deg) translate3d(0, 0, 0);
   }
   75% {
-    transform: rotate(1deg) translate3d(-1px, 0, 0);
+    transform: rotate(1deg) translate3d(0, 0, 0);
   }
   100% {
-    transform: rotate(-1deg) translate3d(-1px, -1px, 0);
+    transform: rotate(-1deg) translate3d(0, 0, 0);
   }
 }
 

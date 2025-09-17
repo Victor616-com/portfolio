@@ -1,10 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
 import Card from "./Card";
 import styles from "../styles/Cards.module.css";
+
+// Images import
 import profilePic from "../assets/images/profile_pic.png";
 import igLogo from "../assets/images/iglogo.png";
 import fbLogo from "../assets/images/facebooklogo.png";
 import linkedInLogo from "../assets/images/linkedinlogo.png";
+import arrowSVG from "../assets/images/arrow.svg";
 
 export default function Cards() {
   const getCenteredPositions = (scale = 1) => {
@@ -20,14 +23,15 @@ export default function Cards() {
   ];
   };
 
-  const [positions, setPositions] = useState(getCenteredPositions);
-  const [zCounter, setZCounter] = useState(5);
-  const [isMobile, setIsMobile] = useState(false);
-  const [scrollRotation, setScrollRotation] = useState([0, 0, 0]);
-  const [scrollOpacity, setScrollOpacity] = useState([1, 1, 1]);
+    const [positions, setPositions] = useState(getCenteredPositions);
+    const [zCounter, setZCounter] = useState(5);
+    const [isMobile, setIsMobile] = useState(false);
+    const [scrollRotation, setScrollRotation] = useState([0, 0, 0]);
+    const [scrollOpacity, setScrollOpacity] = useState([1, 1, 1]);
+    const [showHint, setShowHint] = useState(true);
 
-  const activeCard = useRef(null);
-  const startPos = useRef({ x: 0, y: 0 });
+    const activeCard = useRef(null);
+    const startPos = useRef({ x: 0, y: 0 });
 
   // --- Detect mobile ---
   useEffect(() => {
@@ -53,6 +57,7 @@ export default function Cards() {
     if (isMobile) return;
     activeCard.current = index;
     startPos.current = { x: e.clientX, y: e.clientY };
+    setShowHint(false);
 
     setZCounter((prevZ) => {
       const newZ = prevZ + 1;
@@ -93,37 +98,38 @@ export default function Cards() {
 
   // --- Touch handlers (tablet & touch devices) ---
     const handleTouchStart = (e, index) => {
-    if (isMobile) return; // still disable drag on phones (scroll animation only)
-    activeCard.current = index;
-    const touch = e.touches[0];
-    startPos.current = { x: touch.clientX, y: touch.clientY };
-
-    setZCounter((prevZ) => {
-        const newZ = prevZ + 1;
-        setPositions((prev) =>
-        prev.map((p, i) =>
-            i === index ? { ...p, z: newZ, wobble: true } : p
-        )
-        );
-        return newZ;
-    });
+        if (isMobile) return; // still disable drag on phones (scroll animation only)
+        activeCard.current = index;
+        const touch = e.touches[0];
+        startPos.current = { x: touch.clientX, y: touch.clientY };
+            
+        setZCounter((prevZ) => {
+            const newZ = prevZ + 1;
+            setPositions((prev) =>
+            prev.map((p, i) =>
+                i === index ? { ...p, z: newZ, wobble: true } : p
+            )
+            );
+            return newZ;
+        });
     };
 
     const handleTouchMove = (e) => {
-    if (activeCard.current === null || isMobile) return;
-    const touch = e.touches[0];
-    const index = activeCard.current;
-    const dx = touch.clientX - startPos.current.x;
-    const dy = touch.clientY - startPos.current.y;
-    startPos.current = { x: touch.clientX, y: touch.clientY };
+        if (activeCard.current === null || isMobile) return;
 
-    setPositions((prev) =>
-        prev.map((p, i) =>
-        i === index ? { ...p, top: p.top + dy, left: p.left + dx } : p
-        )
-    );
+        const touch = e.touches[0];
+        const index = activeCard.current;
+        const dx = touch.clientX - startPos.current.x;
+        const dy = touch.clientY - startPos.current.y;
+        startPos.current = { x: touch.clientX, y: touch.clientY };
+
+        setPositions((prev) =>
+            prev.map((p, i) =>
+            i === index ? { ...p, top: p.top + dy, left: p.left + dx } : p
+            )
+        );
     };
-
+    
     const handleTouchEnd = () => {
     if (isMobile) return;
     const index = activeCard.current;
@@ -134,7 +140,8 @@ export default function Cards() {
         activeCard.current = null;
     }
     };
-
+    
+    
 
   useEffect(() => {
     
@@ -158,7 +165,7 @@ export default function Cards() {
   // --- Sequential scroll animation with pause for mobile ---
     useEffect(() => {
     if (!isMobile) return;
-
+        setShowHint(false);
     const handleScroll = () => {
         const scrollTop = window.scrollY;
         const segment = window.innerHeight * 0.8; // animation duration
@@ -231,6 +238,24 @@ export default function Cards() {
 
   return (
     <div className={styles.container}>
+        <div className={`${styles.dragMe} ${!showHint ? styles.hidden : ""}`}
+            style={{
+            top: positions[0].top - 30,   // float above the first card
+            left: positions[0].left - 70, // float to the left of the first card
+            position: "absolute",
+        }}
+        >
+            <p>Drag me!!!</p>
+            <img
+            className={styles.arrow}
+            src={arrowSVG}
+            width={15}
+            alt="arrow"
+            draggable={false}
+            />
+
+        </div>
+        
       {renderCard(
         0,
         "blue",
