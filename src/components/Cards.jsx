@@ -8,6 +8,7 @@ import igLogo from "../assets/images/iglogo.png";
 import fbLogo from "../assets/images/facebooklogo.png";
 import linkedInLogo from "../assets/images/linkedinlogo.png";
 import arrowSVG from "../assets/images/arrow.svg";
+import spotlightVideo from "../assets/images/the_spotlight_video.mov";
 
 export default function Cards() {
   const getCenteredPositions = (scale = 1) => {
@@ -32,6 +33,9 @@ export default function Cards() {
 
     const activeCard = useRef(null);
     const startPos = useRef({ x: 0, y: 0 });
+
+    const [cursorVideo, setCursorVideo] = useState(null);
+    const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
 
   // --- Detect mobile ---
   useEffect(() => {
@@ -204,6 +208,19 @@ export default function Cards() {
 
 
 
+    // For preview image
+    const handleMouseEnter = (img) => {
+        setCursorVideo(img);
+    };
+
+    const handleMouseLeave = () => {
+        setCursorVideo(null);
+    };
+
+    const handleMouseMoveList = (e) => {
+        setCursorPos({ x: e.clientX, y: e.clientY });
+    };
+
     const renderCard = (index, color, children, extraClass, bgColor) => {
         const baseWidth = 430;
         const scale = isMobile ? (window.innerWidth * 0.7) / baseWidth : 1;
@@ -222,7 +239,7 @@ export default function Cards() {
                 transform: `scale(${scale}) ${
                 isMobile ? `rotate(${scrollRotation[index]}deg)` : ""
                 }`,
-                transformOrigin: "top left", // ensures scaling+rotation come from same corner
+                transformOrigin: positions[index].wobble ? "center center" : "top left",
                 opacity: isMobile ? scrollOpacity[index] : 1,
                 transition: isMobile
                 ? "transform 0.2s ease-out, opacity 0.2s ease-out"
@@ -238,6 +255,8 @@ export default function Cards() {
 
   return (
     <div className={styles.container}>
+
+        
         <div className={`${styles.dragMe} ${!showHint ? styles.hidden : ""}`}
             style={{
             top: positions[0].top - 30,   // float above the first card
@@ -262,8 +281,8 @@ export default function Cards() {
         <>
           <div className={styles.Hi_section}>
             <div className={styles.HiTextWrap}>
-              <p className={styles.p1}>Hi, I'm Victor!</p>
-              <p className={styles.ig_handle}>@victor.cretu35</p>
+              <h2 className={styles.p1}>Hi, I'm Victor!</h2>
+              <p className={styles.tags}>#Figma #Photoshop #Illustrator #Premiere #HTML #CSS #JavaScript #React</p>
             </div>
             <img
               className={styles.profile_pic}
@@ -348,11 +367,19 @@ export default function Cards() {
         1,
         "yellow",
         <>
-          <h2>About Me</h2>
-          <p>Here you can write about yourself, your work, or hobbies.</p>
-          <img id="profile_pic" src="resources/profile.png" alt="profile" width="80" />
+          <h2>Some of my projects</h2>
+          <ul onMouseMove={handleMouseMoveList}>
+            <li 
+                onMouseEnter={() => handleMouseEnter(spotlightVideo)}
+                onMouseLeave={handleMouseLeave}
+            >
+                The Spotlight
+            </li>
+            <li>Vaca</li>
+            <li>Better To Do</li>
+          </ul>
         </>,
-        "",
+        styles.cardYellow,
         "rgb(245, 253, 119)"
       )}
 
@@ -371,6 +398,27 @@ export default function Cards() {
         "rgb(119, 253, 155)"
       )}
       
+
+
+        {cursorVideo && (
+            <video
+                src={cursorVideo}
+                autoPlay
+                loop
+                muted
+                playsInline
+                className={styles.cursorPreview}
+                style={{
+                top: cursorPos.y - 300,
+                left: cursorPos.x + 20,
+                position: "fixed",
+                pointerEvents: "none",
+                width: "auto",
+                height: "600px",
+                zIndex: 9999,
+                }}
+            />
+        )}
     </div>
   );
 }

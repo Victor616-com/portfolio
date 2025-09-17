@@ -55,15 +55,18 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    padding-left: 20px;
 }
-.cardBlue .p1 {
+.cardBlue h2 {
     font-size: 32px;
     letter-spacing: 3.5px;
 }
-.cardBlue .ig_handle {
+.cardBlue .tags {
     margin-top: 9px;
-    font-size: 17px;
+    font-size: 14px;
     letter-spacing: 1.5px;
+    
+    color: rgb(104, 104, 104);
 }
 .cardBlue .BottomTextWrap {
     margin-top: 14px;
@@ -99,9 +102,31 @@
 }
 
 
+.cardYellow {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
 
-
-
+}
+.cardYellow h2 {
+    font-size: 25px;
+    letter-spacing: 3.5px;
+}
+.cardYellow ul {
+    list-style: none; 
+    padding: 0;         
+    margin: 0; 
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.cardYellow ul li {
+    font-size: 20px;
+    letter-spacing: 1.5px;
+    word-break: normal;
+    font-weight: 600;
+    cursor: pointer;
+}
 
 
 
