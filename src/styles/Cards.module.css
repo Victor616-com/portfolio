@@ -246,6 +246,6 @@
 }
 @media (max-width: 400px) {
   .card h2{
-    font-size: 27px;
+    white-space: nowrap;
   }
 }
