@@ -15,6 +15,7 @@ import spotlightVideo from "../assets/images/the_spotlight_video.mov";
 import openIcon from "../assets/images/open_icon.svg";
 import vacaVideo from "../assets/images/vaca_video.mov";
 import betterToDoVideo from "../assets/images/better_to_do_video.mov"
+import photographyPreview from "../assets/images/photography1.JPG"
 
 
 export default function Cards() {
@@ -45,6 +46,7 @@ export default function Cards() {
   const activeCard = useRef(null);
   
   const [cursorVideo, setCursorVideo] = useState(null);
+  const [cursorImage, setCursorImage] = useState(null);
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
 
   // --- Detect mobile ---
@@ -76,6 +78,7 @@ export default function Cards() {
     // Stop video preview if the yellow card is dragged
     if (index === 1) {
       setCursorVideo(null);
+      setCursorImage(null);
     }
 
     setZCounter((prevZ) => {
@@ -229,6 +232,13 @@ export default function Cards() {
 
   const handleMouseLeave = () => {
     setCursorVideo(null);
+  };
+  const handleImageEnter = (img) => {
+    setCursorImage(img);
+  };
+
+  const handleImageLeave = () => {
+    setCursorImage(null);
   };
 
   const handleMouseMoveList = (e) => {
@@ -441,9 +451,25 @@ export default function Cards() {
         2,
         "green",
         <>
-          
+          <h2>Some of my passions</h2>
+          <ul onMouseMove={handleMouseMoveList}>
+            <li
+              onMouseEnter={() => handleImageEnter(photographyPreview)}
+              onMouseLeave={handleImageLeave}
+            >
+              <div className={styles.listItem}>
+                <div className={styles.title}>
+                  <h3>Photography</h3>
+                  <img src={openIcon} alt="open" 
+                    onClick={() => handleListClick("/portfolio/vaca")}
+                  />
+                </div>
+                <p>I own a film camera from the 70's and I enjoy photographing life around me.</p>
+              </div>
+            </li>
+          </ul>
         </>,
-        "",
+        styles.cardGreen,
         "rgb(119, 253, 155)"
       )}
       
@@ -469,6 +495,24 @@ export default function Cards() {
           transformOrigin: "center left",
           borderRadius: "20px",
           overflow: "hidden",
+          }}
+        />
+      )}
+      {cursorImage && (
+        <img
+          src={cursorImage}
+          alt="preview"
+          className={styles.cursorPreview}
+          style={{
+            top: cursorPos.y - 250,
+            left: cursorPos.x + 20,
+            position: "fixed",
+            pointerEvents: "none",
+            height: "500px",
+            width: "auto",
+            zIndex: 9999,
+            borderRadius: "20px",
+            objectFit: "cover",
           }}
         />
       )}
