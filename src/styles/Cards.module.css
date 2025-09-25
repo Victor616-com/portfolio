@@ -1,27 +1,27 @@
 :root {
-    --card-height: 260px;
-    --card-width: 430px; 
+  --card-height: 260px;
+  --card-width: 430px; 
 }
 .container {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-image: radial-gradient(#aaa 2px, transparent 2px);
-    background-size: 60px 60px; /* distance between dots */
-    position: fixed;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: radial-gradient(#aaa 2px, transparent 2px);
+  background-size: 60px 60px; /* distance between dots */
+  position: fixed;
     
 }
 .dragMe {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 9px;
-    position: absolute;
-    z-index: 10;
-    transition: opacity 0.2s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 9px;
+  position: absolute;
+  z-index: 10;
+  transition: opacity 0.2s ease;
 }
 .dragMe.hidden {
   opacity: 0; /* fade out */
@@ -29,103 +29,136 @@
 }
 
 .dragMe p {
-    transform: rotate(-10deg) translateX(-10px)
+  transform: rotate(-10deg) translateX(-10px)
 }
 .card {
-    width: var(--card-width);
-    height: var(--card-height);
-    border-radius: 20px;
-    border: 2px solid black;
-    padding: 30px;
-    position: fixed;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    -webkit-box-shadow: 6px 8px 17px -8px rgba(0, 0, 0, 0.48);
-    box-shadow: 6px 8px 17px -8px rgba(0, 0, 0, 0.48);
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: 20px;
+  border: 2px solid black;
+  padding: 30px;
+  position: fixed;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-box-shadow: 6px 8px 17px -8px rgba(0, 0, 0, 0.48);
+  box-shadow: 6px 8px 17px -8px rgba(0, 0, 0, 0.48);
 }
 
 .cardBlue .Hi_section {
-    display: flex;
-    flex-direction: row-reverse;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
 }
 .cardBlue .HiTextWrap {
-    height: 118px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    padding-left: 20px;
+  height: 118px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-left: 20px;
 }
 .cardBlue h2 {
-    font-size: 32px;
-    letter-spacing: 3.5px;
+  font-size: 32px;
+  letter-spacing: 3.5px;
 }
 .cardBlue .tags {
-    margin-top: 9px;
-    font-size: 14px;
-    letter-spacing: 1.5px;
-    
-    color: rgb(104, 104, 104);
+  margin-top: 9px;
+  font-size: 14px;
+  letter-spacing: 1.5px;
+  
+  color: rgb(104, 104, 104);
 }
 .cardBlue .BottomTextWrap {
-    margin-top: 14px;
-    display: flex;
-    justify-content: space-between;
+  margin-top: 14px;
+  display: flex;
+  justify-content: space-between;
 }
 .cardBlue .longTextWrap {
-    width: 270px;
-    height: 114px;
+  width: 270px;
+  height: 114px;
 }
 .cardBlue .longTextWrap p {
-    font-size: 16px;
-    letter-spacing: 1.5px;
-    word-break: normal;
+  font-size: 16px;
+  letter-spacing: 1.5px;
+  word-break: normal;
 }
 .cardBlue .socials {
-    padding-top: 10px;
-    padding-bottom: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 .cardBlue .socials .social {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
 }
 .cardBlue .socials p {
-    font-size: 16px;
-    letter-spacing: 1.5px;
-    word-break: normal;
+  font-size: 16px;
+  letter-spacing: 1.5px;
+  word-break: normal;
 }
 
 
 .cardYellow {
-    display: flex;
-    flex-direction: column;
-    gap: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 
 }
 .cardYellow h2 {
-    font-size: 25px;
-    letter-spacing: 3.5px;
+  font-size: 25px;
+  letter-spacing: 3.5px;
 }
 .cardYellow ul {
-    list-style: none; 
-    padding: 0;         
-    margin: 0; 
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+  list-style: none; 
+  padding: 0;         
+  margin: 0; 
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 .cardYellow ul li {
-    font-size: 20px;
-    letter-spacing: 1.5px;
-    word-break: normal;
-    font-weight: 600;
-    cursor: pointer;
+  width: fit-content;
+  
+  word-break: normal;
+  font-weight: 400;
+  cursor: pointer;
+}
+.cardYellow ul li h3 {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+}
+.cardYellow ul li p {
+  font-size: 14px;
+  letter-spacing: 1.5px;
+  color: rgb(81, 81, 81);
+  padding-left: 12px;
+}
+.cardYellow ul li .listItem {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.cardYellow ul li .listItem .title {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+}
+
+.cardYellow ul li .listItem .title img{
+  height: 14px;
+  width: auto;
+}
+
+
+.fullscreen {
+  border-radius: 0 !important;
+  box-shadow: none !important;
 }
 
 

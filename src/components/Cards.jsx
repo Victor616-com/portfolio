@@ -1,60 +1,70 @@
 import React, { useState, useRef, useEffect } from "react";
-import Card from "./Card";
+import { useNavigate } from "react-router-dom";
 import styles from "../styles/Cards.module.css";
 
-// Images import
+import Card from "./Card";
+
+
+// Media import
 import profilePic from "../assets/images/profile_pic.png";
 import igLogo from "../assets/images/iglogo.png";
 import fbLogo from "../assets/images/facebooklogo.png";
 import linkedInLogo from "../assets/images/linkedinlogo.png";
 import arrowSVG from "../assets/images/arrow.svg";
 import spotlightVideo from "../assets/images/the_spotlight_video.mov";
+import openIcon from "../assets/images/open_icon.svg";
+import vacaVideo from "../assets/images/vaca_video.mov";
+import betterToDoVideo from "../assets/images/better_to_do_video.mov"
+
 
 export default function Cards() {
-  const getCenteredPositions = (scale = 1) => {
-    const cardWidth = 430 * scale;
-    const cardHeight = 260 * scale;
-    const centerX = (window.innerWidth - cardWidth) / 2;
-    const centerY = (window.innerHeight - cardHeight) / 2;
 
-     return [
-    { top: centerY - 30 * scale, left: centerX - 30 * scale, z: 3, wobble: false },
-    { top: centerY - 20 * scale, left: centerX - 20 * scale, z: 2, wobble: false },
-    { top: centerY - 10 * scale, left: centerX - 10 * scale, z: 1, wobble: false },
-  ];
+  const navigate = useNavigate();
+
+  const getCenteredPositions = (scale = 1) => {
+      const cardWidth = 430 * scale;
+      const cardHeight = 260 * scale;
+      const centerX = (window.innerWidth - cardWidth) / 2;
+      const centerY = (window.innerHeight - cardHeight) / 2;
+
+      return [
+          { top: centerY - 30 * scale, left: centerX - 30 * scale, z: 3, wobble: false },
+          { top: centerY - 20 * scale, left: centerX - 20 * scale, z: 2, wobble: false },
+          { top: centerY - 10 * scale, left: centerX - 10 * scale, z: 1, wobble: false },
+      ];
   };
 
-    const [positions, setPositions] = useState(getCenteredPositions);
-    const [zCounter, setZCounter] = useState(5);
-    const [isMobile, setIsMobile] = useState(false);
-    const [scrollRotation, setScrollRotation] = useState([0, 0, 0]);
-    const [scrollOpacity, setScrollOpacity] = useState([1, 1, 1]);
-    const [showHint, setShowHint] = useState(true);
+  const [positions, setPositions] = useState(getCenteredPositions);
+  const startPos = useRef({ x: 0, y: 0 });
+  const [zCounter, setZCounter] = useState(5);
+  const [isMobile, setIsMobile] = useState(false);
+  const [scrollRotation, setScrollRotation] = useState([0, 0, 0]);
+  const [scrollOpacity, setScrollOpacity] = useState([1, 1, 1]);
+  const [showHint, setShowHint] = useState(true);
 
-    const activeCard = useRef(null);
-    const startPos = useRef({ x: 0, y: 0 });
-
-    const [cursorVideo, setCursorVideo] = useState(null);
-    const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
+  const activeCard = useRef(null);
+  
+  const [cursorVideo, setCursorVideo] = useState(null);
+  const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
 
   // --- Detect mobile ---
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth <= 750);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
+      const checkMobile = () => setIsMobile(window.innerWidth <= 750);
+      checkMobile();
+      window.addEventListener("resize", checkMobile);
+      return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   // --- Window resize ---
-    useEffect(() => {
-        const handleResize = () => {
-            const scale = window.innerWidth <= 750 ? (window.innerWidth * 0.7) / 430 : 1;
-            setPositions(getCenteredPositions(scale));
-        };
-        handleResize();
-        window.addEventListener("resize", handleResize);
-        return () => window.removeEventListener("resize", handleResize);
-    }, []);
+  useEffect(() => {
+      const handleResize = () => {
+          const scale = window.innerWidth <= 750 ? (window.innerWidth * 0.7) / 430 : 1;
+          setPositions(getCenteredPositions(scale));
+      };
+      handleResize();
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   // --- Drag handlers (desktop only) ---
   const handleMouseDown = (e, index) => {
@@ -62,6 +72,11 @@ export default function Cards() {
     activeCard.current = index;
     startPos.current = { x: e.clientX, y: e.clientY };
     setShowHint(false);
+
+    // Stop video preview if the yellow card is dragged
+    if (index === 1) {
+      setCursorVideo(null);
+    }
 
     setZCounter((prevZ) => {
       const newZ = prevZ + 1;
@@ -75,80 +90,81 @@ export default function Cards() {
   };
 
   const handleMouseMove = (e) => {
-    if (activeCard.current === null || isMobile) return;
-    const index = activeCard.current;
-    const dx = e.clientX - startPos.current.x;
-    const dy = e.clientY - startPos.current.y;
-    startPos.current = { x: e.clientX, y: e.clientY };
+      if (activeCard.current === null || isMobile) return;
+      const index = activeCard.current;
+      const dx = e.clientX - startPos.current.x;
+      const dy = e.clientY - startPos.current.y;
+      startPos.current = { x: e.clientX, y: e.clientY };
 
-    setPositions((prev) =>
-      prev.map((p, i) =>
-        i === index ? { ...p, top: p.top + dy, left: p.left + dx } : p
-      )
-    );
+      setPositions((prev) =>
+          prev.map((p, i) =>
+          i === index ? { ...p, top: p.top + dy, left: p.left + dx } : p
+          )
+      );
   };
 
   const handleMouseUp = () => {
-    if (isMobile) return;
-    const index = activeCard.current;
-    if (index !== null) {
-      setPositions((prev) =>
-        prev.map((p, i) => (i === index ? { ...p, wobble: false } : p))
-      );
-      activeCard.current = null;
-    }
+      if (isMobile) return;
+      const index = activeCard.current;
+      if (index !== null) {
+          setPositions((prev) =>
+              prev.map((p, i) => (i === index ? { ...p, wobble: false } : p))
+          );
+          activeCard.current = null;
+      }
   };
 
-
   // --- Touch handlers (tablet & touch devices) ---
-    const handleTouchStart = (e, index) => {
-        if (isMobile) return; // still disable drag on phones (scroll animation only)
-        activeCard.current = index;
-        const touch = e.touches[0];
-        startPos.current = { x: touch.clientX, y: touch.clientY };
-            
-        setZCounter((prevZ) => {
-            const newZ = prevZ + 1;
-            setPositions((prev) =>
-            prev.map((p, i) =>
-                i === index ? { ...p, z: newZ, wobble: true } : p
-            )
-            );
-            return newZ;
-        });
-    };
+  /* //Not needed at the moment
+      
+  const handleTouchStart = (e, index) => {
+      if (isMobile) return; // still disable drag on phones (scroll animation only)
+      activeCard.current = index;
+      const touch = e.touches[0];
+      startPos.current = { x: touch.clientX, y: touch.clientY };
+          
+      setZCounter((prevZ) => {
+          const newZ = prevZ + 1;
+          setPositions((prev) =>
+          prev.map((p, i) =>
+              i === index ? { ...p, z: newZ, wobble: true } : p
+          )
+          );
+          return newZ;
+      });
+  };
+  */
+  const handleTouchMove = (e) => {
+      if (activeCard.current === null || isMobile) return;
 
-    const handleTouchMove = (e) => {
-        if (activeCard.current === null || isMobile) return;
+      const touch = e.touches[0];
+      const index = activeCard.current;
+      const dx = touch.clientX - startPos.current.x;
+      const dy = touch.clientY - startPos.current.y;
+      startPos.current = { x: touch.clientX, y: touch.clientY };
 
-        const touch = e.touches[0];
-        const index = activeCard.current;
-        const dx = touch.clientX - startPos.current.x;
-        const dy = touch.clientY - startPos.current.y;
-        startPos.current = { x: touch.clientX, y: touch.clientY };
-
-        setPositions((prev) =>
-            prev.map((p, i) =>
-            i === index ? { ...p, top: p.top + dy, left: p.left + dx } : p
-            )
-        );
-    };
-    
-    const handleTouchEnd = () => {
-    if (isMobile) return;
-    const index = activeCard.current;
-    if (index !== null) {
-        setPositions((prev) =>
-        prev.map((p, i) => (i === index ? { ...p, wobble: false } : p))
-        );
-        activeCard.current = null;
-    }
-    };
-    
-    
-
+      setPositions((prev) =>
+          prev.map((p, i) =>
+          i === index ? { ...p, top: p.top + dy, left: p.left + dx } : p
+          )
+      );
+  };
+  
+  const handleTouchEnd = () => {
+      if (isMobile) return;
+      const index = activeCard.current;
+      if (index !== null) {
+          setPositions((prev) =>
+          prev.map((p, i) => (i === index ? { ...p, wobble: false } : p))
+          );
+          activeCard.current = null;
+      }
+  };
+  
+  
+  // Event listeners for mouse and touch
   useEffect(() => {
-    
+
     // Mouse events
     window.addEventListener("mousemove", handleMouseMove);
     window.addEventListener("mouseup", handleMouseUp);
@@ -157,19 +173,18 @@ export default function Cards() {
     window.addEventListener("touchmove", handleTouchMove);
     window.addEventListener("touchend", handleTouchEnd);
 
-
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseup", handleMouseUp);
       window.removeEventListener("touchmove", handleTouchMove);
-    window.removeEventListener("touchend", handleTouchEnd);
+      window.removeEventListener("touchend", handleTouchEnd);
     };
   }, [isMobile]);
 
   // --- Sequential scroll animation with pause for mobile ---
-    useEffect(() => {
+  useEffect(() => {
     if (!isMobile) return;
-        setShowHint(false);
+    setShowHint(false);
     const handleScroll = () => {
         const scrollTop = window.scrollY;
         const segment = window.innerHeight * 0.8; // animation duration
@@ -204,77 +219,79 @@ export default function Cards() {
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-    }, [isMobile, positions]);
+  }, [isMobile, positions]);
 
+  
+  // For preview image
+  const handleMouseEnter = (img) => {
+    setCursorVideo(img);
+  };
 
+  const handleMouseLeave = () => {
+    setCursorVideo(null);
+  };
 
-    // For preview image
-    const handleMouseEnter = (img) => {
-        setCursorVideo(img);
-    };
+  const handleMouseMoveList = (e) => {
+    setCursorPos({ x: e.clientX, y: e.clientY });
+  };
 
-    const handleMouseLeave = () => {
-        setCursorVideo(null);
-    };
+  //List click navigation behaviour
+  const handleListClick = (path) => {
+    navigate(path);
+  }
 
-    const handleMouseMoveList = (e) => {
-        setCursorPos({ x: e.clientX, y: e.clientY });
-    };
+  // Card render
+  const renderCard = (index, color, children, extraClass, bgColor) => {
+    const baseWidth = 430;
+    const scale = isMobile ? (window.innerWidth * 0.7) / baseWidth : 1;
 
-    const renderCard = (index, color, children, extraClass, bgColor) => {
-        const baseWidth = 430;
-        const scale = isMobile ? (window.innerWidth * 0.7) / baseWidth : 1;
-
-        return (
-            <Card
-            color={color}
-            className={`${styles.card} ${extraClass} ${
-                positions[index].wobble ? styles.wobble : ""
-            }`}
-            style={{
-                top: positions[index].top,
-                left: positions[index].left,
-                zIndex: positions[index].z,
-                backgroundColor: bgColor,
-                transform: `scale(${scale}) ${
-                isMobile ? `rotate(${scrollRotation[index]}deg)` : ""
-                }`,
-                transformOrigin: positions[index].wobble ? "center center" : "top left",
-                opacity: isMobile ? scrollOpacity[index] : 1,
-                transition: isMobile
-                ? "transform 0.2s ease-out, opacity 0.2s ease-out"
-                : undefined,
-            }}
-            onMouseDown={(e) => handleMouseDown(e, index)}
-            >
-            {children}
-            </Card>
-        );
-    };
+    return (
+      <Card
+      color={color}
+      className={`${styles.card} ${extraClass} ${
+        positions[index].wobble ? styles.wobble : ""
+      }`}
+      style={{
+        top: positions[index].top,
+        left: positions[index].left,
+        zIndex: positions[index].z,
+        backgroundColor: bgColor,
+        transform: `scale(${scale}) ${
+        isMobile ? `rotate(${scrollRotation[index]}deg)` : ""
+        }`,
+        transformOrigin: positions[index].wobble ? "center center" : "top left",
+        opacity: isMobile ? scrollOpacity[index] : 1,
+        transition: isMobile
+        ? "transform 0.2s ease-out, opacity 0.2s ease-out"
+        : undefined,
+      }}
+      onMouseDown={(e) => handleMouseDown(e, index)}
+      >
+      {children}
+      </Card>
+    );
+  };
 
 
   return (
     <div className={styles.container}>
+      <div className={`${styles.dragMe} ${!showHint ? styles.hidden : ""}`}
+          style={{
+          top: positions[0].top - 30,   // float above the first card
+          left: positions[0].left - 70, // float to the left of the first card
+          position: "absolute",
+      }}
+      >
+          <p>Drag me!!!</p>
+          <img
+          className={styles.arrow}
+          src={arrowSVG}
+          width={15}
+          alt="arrow"
+          draggable={false}
+          />
 
-        
-        <div className={`${styles.dragMe} ${!showHint ? styles.hidden : ""}`}
-            style={{
-            top: positions[0].top - 30,   // float above the first card
-            left: positions[0].left - 70, // float to the left of the first card
-            position: "absolute",
-        }}
-        >
-            <p>Drag me!!!</p>
-            <img
-            className={styles.arrow}
-            src={arrowSVG}
-            width={15}
-            alt="arrow"
-            draggable={false}
-            />
-
-        </div>
-        
+      </div>
       {renderCard(
         0,
         "blue",
@@ -298,7 +315,7 @@ export default function Cards() {
               <p>
                 I’m a multimedia design student enjoying my life in Aarhus. I
                 try to be as professional as possible while still having fun
-                with my work ;
+                with my work :)
               </p>
             </div>
             <div className={styles.socials}>
@@ -367,16 +384,53 @@ export default function Cards() {
         1,
         "yellow",
         <>
-          <h2>Some of my projects</h2>
+          <h2>Some of my projects...</h2>
           <ul onMouseMove={handleMouseMoveList}>
             <li 
-                onMouseEnter={() => handleMouseEnter(spotlightVideo)}
-                onMouseLeave={handleMouseLeave}
+              onMouseEnter={() => handleMouseEnter(spotlightVideo)}
+              onMouseLeave={handleMouseLeave}
+             
             >
-                The Spotlight
+              <div className={styles.listItem}>
+                <div className={styles.title}>
+                  <h3>The Spotlight</h3>
+                  <img src={openIcon} alt="open" 
+                    onClick={() => handleListClick("/portfolio/spotlight")}
+                  />
+                </div>
+                
+                <p>A school project in which I learned about 3JS and database integration</p>
+              </div>
+                
             </li>
-            <li>Vaca</li>
-            <li>Better To Do</li>
+            <li
+              onMouseEnter={() => handleMouseEnter(vacaVideo)}
+              onMouseLeave={handleMouseLeave}
+            >
+              <div className={styles.listItem}>
+                <div className={styles.title}>
+                  <h3>Vaca</h3>
+                  <img src={openIcon} alt="open" 
+                    onClick={() => handleListClick("/portfolio/vaca")}
+                  />
+                </div>
+                <p>One of my first projects in which I learned the basics of JS.</p>
+              </div>
+            </li>
+            <li
+              onMouseEnter={() => handleMouseEnter(betterToDoVideo)}
+              onMouseLeave={handleMouseLeave}
+            >
+                <div className={styles.listItem}>
+                  <div className={styles.title}>
+                    <h3>Better to do</h3>
+                    <img src={openIcon} alt="open" 
+                      onClick={() => handleListClick("/portfolio/BetterToDo")}
+                    />
+                  </div>
+                  <p>A personal project based on the dnd-kit React library.</p>
+              </div>
+            </li>
           </ul>
         </>,
         styles.cardYellow,
@@ -387,12 +441,7 @@ export default function Cards() {
         2,
         "green",
         <>
-          <h2>Contact</h2>
-          <ul>
-            <li>Instagram: @yourhandle</li>
-            <li>LinkedIn: /in/you</li>
-            <li>Email: you@example.com</li>
-          </ul>
+          
         </>,
         "",
         "rgb(119, 253, 155)"
@@ -400,25 +449,29 @@ export default function Cards() {
       
 
 
-        {cursorVideo && (
-            <video
-                src={cursorVideo}
-                autoPlay
-                loop
-                muted
-                playsInline
-                className={styles.cursorPreview}
-                style={{
-                top: cursorPos.y - 300,
-                left: cursorPos.x + 20,
-                position: "fixed",
-                pointerEvents: "none",
-                width: "auto",
-                height: "600px",
-                zIndex: 9999,
-                }}
-            />
-        )}
+      {cursorVideo && (
+        <video
+          src={cursorVideo}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className={styles.cursorPreview}
+          style={{
+          top: cursorPos.y - 250,
+          left: cursorPos.x + 20,
+          position: "fixed",
+          pointerEvents: "none",
+          width: "auto",
+          height: "500px",
+          zIndex: 9999,
+          transform: cursorVideo === betterToDoVideo ? "scale(0.7)" : "scale(1)",
+          transformOrigin: "center left",
+          borderRadius: "20px",
+          overflow: "hidden",
+          }}
+        />
+      )}
     </div>
   );
 }

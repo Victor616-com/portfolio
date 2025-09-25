@@ -1,0 +1,136 @@
+.container {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  flex-wrap: nowrap;
+  gap: 350px;
+  transform-origin: center center;
+  transition: flex-direction 0.3s ease, transform 0.3s ease;
+}
+.cards {
+  position: relative;
+  width: 430px;
+  display:inline-block;
+  z-index: 10;
+}
+.card1, .card2 {
+  width: 400px;
+  border-radius: 20px;
+  border: 2px solid black;
+  padding: 30px;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-box-shadow: 6px 8px 17px -8px rgba(0, 0, 0, 0.48);
+  box-shadow: 6px 8px 17px -8px rgba(0, 0, 0, 0.48);
+
+  position: absolute;
+  left: 0;
+  cursor: grab;
+  
+}
+.card1 {
+  transform: translate(0, -75%) rotate(-2deg);
+  background-color: rgb(216, 247, 255);
+}
+.card2 {
+  transform: translate(150px, 21%) rotate(1deg);
+  background-color: rgb(245, 253, 119);
+}
+.card1 p, .card2 p {
+  font-size: 16px;
+  letter-spacing: 1.2px;
+  word-break: normal;
+  line-height: 25px;
+}
+.projectImage {
+  position: relative;
+  width: 430px;
+  display: inline-block;
+  z-index: 0;
+}
+
+.image1, .image2 {
+  position: absolute; /* independent positioning */
+  width: 320px;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease;
+
+}
+
+/* Image transformations like cards */
+.image1 {
+  transform: translate(-100px, -50%) rotate(-5deg); /* combine translateX and vertical offset */
+  z-index: 1;
+}
+
+.image2 {
+  transform: translate(100px, -45%) rotate(5deg); 
+  z-index: 2;
+  
+}
+
+.image1:hover, .image2:hover {
+  scale: 1.01;
+}
+
+
+@media (max-width: 1100px) {
+  .container {
+   flex-direction: column-reverse;
+   gap: 550px;
+   justify-content: flex-start;
+   align-items: center;
+   transform-origin: top center;
+   padding-top: 100px;  
+   margin-bottom: 300px;
+  }
+
+  .image1 {
+    transform: translate(-20%, -50%) rotate(-5deg); /* combine translateX and vertical offset */
+    z-index: 1;
+  }
+
+  .image2 {
+    transform: translate(50%, -45%) rotate(5deg); 
+    z-index: 2;
+    
+  }
+  .card1 {
+    transform: translate(-5%, -75%) rotate(-2deg);
+    background-color: rgb(216, 247, 255);
+    cursor: default;
+  }
+  .card2 {
+    transform: translate(5%, 21%) rotate(1deg);
+    background-color: rgb(245, 253, 119);
+    cursor: default;
+  }
+}
+
+@media (max-width: 850px) {
+  .container {
+    
+   margin-bottom: 200px;
+  }
+}
+
+
+@media (max-width: 600px) {
+  .container {
+    
+   margin-bottom: 100px;
+  }
+}
+
+@media (max-width: 500px) {
+  .container {
+    gap: 500px;
+   margin-bottom: 0px;
+  }
+}
