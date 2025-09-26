@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import styles from "../styles/DraggableCard.module.css";
 
-const DraggableCard = ({ children }) => {
+const DraggableCard = ({ children, onDragStart }) => {
   const cardRef = useRef(null);
   const [dragging, setDragging] = useState(false);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
@@ -24,6 +24,8 @@ const DraggableCard = ({ children }) => {
     if (isMobileLayout) return;
     e.preventDefault();
 
+    if (onDragStart) onDragStart();
+
     const parentRect = cardRef.current.offsetParent.getBoundingClientRect();
 
     // Use current position if it exists
@@ -36,7 +38,7 @@ const DraggableCard = ({ children }) => {
     });
 
     setDragging(true);
-    };
+  };
 
 
   const handleMouseMove = (e) => {

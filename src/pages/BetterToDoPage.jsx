@@ -9,7 +9,6 @@ import ProjectCard from "../components/ProjectCard";
 
 
 import headerImage1 from "../assets/images/betterToDo_header.png"
-import headerImage from "../assets/images/betterToDo_header.png"
 import collumnsTasksVideo from "../assets/images/betterToDo_addColumnsAndTasks.mp4"
 import editCollumnVideo from "../assets/images/betterToDo_editCollumn.mp4"
 import dragVideo from "../assets/images/betterToDo_drag.mp4"
