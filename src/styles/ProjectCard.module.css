@@ -23,7 +23,9 @@
   line-height: 25px;
   
 }
-
+.card p a {
+  text-decoration: underline;
+}
 .card p span {
   position:relative;
 }

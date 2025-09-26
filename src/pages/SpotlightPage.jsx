@@ -189,7 +189,8 @@ const SpotlightPage = () => {
                             >
                                 <p>Finaly, the users can select a background and their image and quote can be displayed in the cafe area screen.</p>
                                 <p>In this project I took both the role of a <span>UX/UI designer</span> and <span>programmer</span>.</p>
-                            </ProjectCard>
+                                <p>You can try out the final solution (optimised for tablet only) <a href="https://diegofernandesv.github.io/thespotlight/" target="_blank" rel="noopener noreferrer">here</a>. </p>
+                           </ProjectCard>
                             
                         </DraggableCard>
                         <DraggableCard>

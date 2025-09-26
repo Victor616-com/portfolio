@@ -3,7 +3,7 @@ import styles from "../styles/ProjectHeader.module.css";
 import DraggableCard from "./DraggableCard";
 
 const ProjectHeader = ({projectName, headerImage1, headerImage2, description1, description2, imageWidth = 320 }) => {
-  
+
   return (
     <div className={styles.container}>
       
