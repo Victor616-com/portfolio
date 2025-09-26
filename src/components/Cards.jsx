@@ -464,7 +464,7 @@ export default function Cards() {
                 textDecoration: "underline"
               }}
             >
-              Read more
+              Read more...
             </p>
           </div>
           

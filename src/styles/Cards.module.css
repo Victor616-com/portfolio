@@ -183,6 +183,7 @@
   letter-spacing: 1.5px;
   color: rgb(0, 0, 0);
   padding-left: 12px;
+  width: fit-content;
 }
 
 .contactSection {
