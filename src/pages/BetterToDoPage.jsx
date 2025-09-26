@@ -44,7 +44,7 @@ const BetterToDoPage = () => {
                 
                 description1={
                     <>
-                        <p>One of my personal projects is a Kanban Board application. I started this project to because I wanted to learn more about using React libaries.</p>
+                        <p>One of my personal projects is a Kanban Board application. I started this project because I wanted to learn more about using React libaries.</p>
                         <p>The project relies heavely on dnd-kit, a modern, lightweight, and highly customizable drag-and-drop toolkit for React</p>
                     </>
                 }
