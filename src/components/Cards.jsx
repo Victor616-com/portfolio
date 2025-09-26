@@ -191,7 +191,7 @@ export default function Cards() {
     const handleScroll = () => {
         const scrollTop = window.scrollY;
         const segment = window.innerHeight * 0.8; // animation duration
-        const pause = window.innerHeight * 0.6;   // extra visible time
+        const pause = window.innerHeight * 0.3;   // extra visible time
         const lastIndex = positions.length - 1;
 
         const rotations = positions.map((_, i) => {
@@ -451,7 +451,7 @@ export default function Cards() {
         2,
         "green",
         <>
-          <h2>Some of my passions</h2>
+          <h2>My other passions...</h2>
           <ul onMouseMove={handleMouseMoveList}>
             <li
               onMouseEnter={() => handleImageEnter(photographyPreview)}
@@ -465,6 +465,20 @@ export default function Cards() {
                   />
                 </div>
                 <p>I own a film camera from the 70's and I enjoy photographing life around me.</p>
+              </div>
+            </li>
+            <li
+              onMouseEnter={() => handleImageEnter(photographyPreview)}
+              onMouseLeave={handleImageLeave}
+            >
+              <div className={styles.listItem}>
+                <div className={styles.title}>
+                  <h3>Music</h3>
+                  <img src={openIcon} alt="open" 
+                    onClick={() => handleListClick("/portfolio/vaca")}
+                  />
+                </div>
+                <p>I play guitar in a very small local band and mostly for myself.</p>
               </div>
             </li>
           </ul>

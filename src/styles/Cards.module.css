@@ -155,7 +155,11 @@
   height: 14px;
   width: auto;
 }
-
+.cardGreen {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
 
 
 .cardGreen h2 {
@@ -163,12 +167,14 @@
   letter-spacing: 3.5px;
 }
 .cardGreen ul {
+  height: 100%;
   list-style: none; 
   padding: 0;         
   margin: 0; 
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  justify-content: center;
+  gap: 30px;
 }
 .cardGreen ul li {
   width: fit-content;

@@ -6,6 +6,7 @@ import HomePage from './pages/HomePage';
 import SpotlightPage from './pages/SpotlightPage';
 import VacaPage from './pages/VacaPage';
 import BetterToDoPage from './pages/BetterToDoPage';
+import PhotographyPage from './pages/PhotographyPage';
 
 const router = createBrowserRouter([
     {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
             {
               path: "BetterToDo",
               element: <BetterToDoPage />,
+            },
+            {
+              path: "photography",
+              element: <PhotographyPage />,
             },
             
         ],
