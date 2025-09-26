@@ -6,7 +6,8 @@ import HomePage from './pages/HomePage';
 import SpotlightPage from './pages/SpotlightPage';
 import VacaPage from './pages/VacaPage';
 import BetterToDoPage from './pages/BetterToDoPage';
-import PhotographyPage from './pages/PhotographyPage';
+import PassionsPage from './pages/PassionsPage';
+import MusicPage from './pages/MusicPage';
 
 const router = createBrowserRouter([
     {
@@ -30,10 +31,9 @@ const router = createBrowserRouter([
               element: <BetterToDoPage />,
             },
             {
-              path: "photography",
-              element: <PhotographyPage />,
+              path: "passions",
+              element: <PassionsPage />,
             },
-            
         ],
     },
 ]);

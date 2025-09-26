@@ -1,4 +1,6 @@
 import { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import styles from "../styles/VacaPage.module.css";
 
 
@@ -9,18 +11,19 @@ import ProjectCard from "../components/ProjectCard";
 
 import projectLogo from "../assets/images/vaca_logo.png"
 import headerImage1 from "../assets/images/vaca_header1.png"
-import headerImage2 from "../assets/images/vaca_header2.png"
+
 import observations from "../assets/images/vaca_observations.png"
 import empathyMap from "../assets/images/vaca_empathy_map.jpg"
 import sketch from "../assets/images/vaca_sketch.png"
 import lofi from "../assets/images/vaca_lofi.png"
 import hifi from "../assets/images/vaca_hifi.png"
-import scrollVideo from "../assets/images/vaca_scroll.mov"
-import cartVideo from "../assets/images/vaca_cart.mov"
+import scrollVideo from "../assets/images/vaca_scroll.mp4"
+import cartVideo from "../assets/images/vaca_cart.mp4"
 
 const VacaPage = () => {
     const videoRef = useRef(null);
     const [isPlaying, setIsPlaying] = useState(true);
+    const navigate = useNavigate();
 
     const handleVideoClick = () => {
         const vid = videoRef.current;
@@ -201,6 +204,15 @@ const VacaPage = () => {
                             </ProjectCard>
                         </DraggableCard>
                         
+                    </ContentSection>
+                    <ContentSection>
+                        <DraggableCard >
+                            <h2 
+                                onClick={() => navigate("/portfolio/BetterToDo")}
+                                 style={{ cursor: "pointer" }}
+                            >
+                                See the next project &lt; </h2>
+                        </DraggableCard>
                     </ContentSection>
                 </div>
             </div>

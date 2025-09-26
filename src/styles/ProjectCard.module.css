@@ -66,3 +66,11 @@ p span:after{
     font-size: 16px;
   }
 }
+@media (max-width: 410px) {
+  .card p {
+    font-size: 14px;
+  }
+  .card {
+    padding: 20px;
+  }
+}

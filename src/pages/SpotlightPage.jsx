@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import ProjectHeader from "../components/ProjectHeader";
 import DraggableCard from "../components/DraggableCard"
@@ -7,24 +8,22 @@ import ContentSection from "../components/ContentSection";
 
 import styles from "../styles/SpotlightPage.module.css";
 
-import projectLogo from "../assets/images/spotlight_logo.png";
+
 import headerImage1 from "../assets/images/our_nature.png";
 import headerImage2 from "../assets/images/quote_select.png";
-import video from "../assets/images/the_spotlight_video.mov";
-import selectQuote from "../assets/images/select_quote.mov";
-import takePhoto from "../assets/images/take_photo.mov";
-import chooseBG from "../assets/images/choose_bg.mov"
-import designSystem1 from "../assets/images/spotlight_design_system1.png"
-import designSystem2 from "../assets/images/spotlight_design_system2.png"
-import designSystem3 from "../assets/images/spotlight_design_system3.png"
-import sketch from "../assets/images/spotlight_sketch.png"
-import lofi from "../assets/images/spotlight_lofi.png"
+import video from "../assets/images/the_spotlight_video.mp4";
+import selectQuote from "../assets/images/select_quote.mp4";
+import takePhoto from "../assets/images/take_photo.mp4";
+import chooseBG from "../assets/images/choose_bg.mp4"
+
 
 import overviewImg from "../assets/images/spotlight_double_diamond.png"
+
 
 const SpotlightPage = () => {
     const videoRef = useRef(null);
     const [isPlaying, setIsPlaying] = useState(true);
+    const navigate = useNavigate();
 
     const handleVideoClick = () => {
         const vid = videoRef.current;
@@ -46,7 +45,6 @@ const SpotlightPage = () => {
     return (
         <div className={styles.container}>
             <ProjectHeader 
-                projectLogo={projectLogo} 
                 headerImage1={headerImage1}
                 headerImage2={headerImage2}
                 //description1={"I’ve long been fascinated by creative coding and its potential to produce interactive, visually striking experiences. This school project was the perfect oportunity to learn about Three.JS and how I can bring value to a digital solution with interactive elements."}
@@ -207,6 +205,15 @@ const SpotlightPage = () => {
                                     className={styles.video}
                                 />
                             </div>
+                        </DraggableCard>
+                    </ContentSection>
+                    <ContentSection>
+                        <DraggableCard >
+                            <h2 
+                                onClick={() => navigate("/portfolio/vaca")}
+                                 style={{ cursor: "pointer" }}
+                            >
+                                See the next project &lt; </h2>
                         </DraggableCard>
                     </ContentSection>
                 </div>

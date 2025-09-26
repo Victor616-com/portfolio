@@ -11,12 +11,11 @@ import igLogo from "../assets/images/iglogo.png";
 import fbLogo from "../assets/images/facebooklogo.png";
 import linkedInLogo from "../assets/images/linkedinlogo.png";
 import arrowSVG from "../assets/images/arrow.svg";
-import spotlightVideo from "../assets/images/the_spotlight_video.mov";
+import spotlightVideo from "../assets/images/the_spotlight_video.mp4";
 import openIcon from "../assets/images/open_icon.svg";
-import vacaVideo from "../assets/images/vaca_video.mov";
-import betterToDoVideo from "../assets/images/better_to_do_video.mov"
-import photographyPreview from "../assets/images/photography1.JPG"
-
+import vacaVideo from "../assets/images/vaca_video.mp4";
+import betterToDoVideo from "../assets/images/betterToDo_final.mp4"
+import DraggableCard from "./DraggableCard";
 
 export default function Cards() {
 
@@ -195,7 +194,7 @@ export default function Cards() {
         const lastIndex = positions.length - 1;
 
         const rotations = positions.map((_, i) => {
-        if (i === lastIndex) return 0; // last card unaffected
+        //if (i === lastIndex) return 0; // last card unaffected
 
         const start = i * (segment + pause);
         const end = start + segment;
@@ -206,7 +205,7 @@ export default function Cards() {
         });
 
         const opacities = positions.map((_, i) => {
-        if (i === lastIndex) return 1; // last card always visible
+        //if (i === lastIndex) return 1; // last card always visible
 
         const start = i * (segment + pause);
         const end = start + segment;
@@ -399,14 +398,14 @@ export default function Cards() {
             <li 
               onMouseEnter={() => handleMouseEnter(spotlightVideo)}
               onMouseLeave={handleMouseLeave}
-             
             >
               <div className={styles.listItem}>
-                <div className={styles.title}>
+                <div 
+                  className={styles.title}
+                  onClick={() => handleListClick("/portfolio/spotlight")}
+                >
                   <h3>The Spotlight</h3>
-                  <img src={openIcon} alt="open" 
-                    onClick={() => handleListClick("/portfolio/spotlight")}
-                  />
+                  <img src={openIcon} alt="open"/>
                 </div>
                 
                 <p>A school project in which I learned about 3JS and database integration</p>
@@ -418,11 +417,12 @@ export default function Cards() {
               onMouseLeave={handleMouseLeave}
             >
               <div className={styles.listItem}>
-                <div className={styles.title}>
+                <div 
+                  className={styles.title}
+                  onClick={() => handleListClick("/portfolio/vaca")}
+                >
                   <h3>Vaca</h3>
-                  <img src={openIcon} alt="open" 
-                    onClick={() => handleListClick("/portfolio/vaca")}
-                  />
+                  <img src={openIcon} alt="open"/>
                 </div>
                 <p>One of my first projects in which I learned the basics of JS.</p>
               </div>
@@ -432,11 +432,12 @@ export default function Cards() {
               onMouseLeave={handleMouseLeave}
             >
                 <div className={styles.listItem}>
-                  <div className={styles.title}>
-                    <h3>Better to do</h3>
-                    <img src={openIcon} alt="open" 
-                      onClick={() => handleListClick("/portfolio/BetterToDo")}
-                    />
+                  <div 
+                    className={styles.title}
+                    onClick={() => handleListClick("/portfolio/BetterToDo")}
+                  >
+                    <h3>BetterToDo</h3>
+                    <img src={openIcon} alt="open"/>
                   </div>
                   <p>A personal project based on the dnd-kit React library.</p>
               </div>
@@ -452,40 +453,43 @@ export default function Cards() {
         "green",
         <>
           <h2>My other passions...</h2>
-          <ul onMouseMove={handleMouseMoveList}>
-            <li
-              onMouseEnter={() => handleImageEnter(photographyPreview)}
-              onMouseLeave={handleImageLeave}
+          <div className={styles.paragraphWrapper}>
+            <p>I’m passionate about creativity in all its forms, especially photography and music.</p>
+            <p>Photography allows me to capture moments, emotions, and perspectives that tell stories without words.</p>
+            <p> Music, on the other hand, is my way of exploring rhythm, and expression.</p>
+            <p 
+              onClick={() => navigate("/portfolio/passions")}
+              style={{
+                cursor: "pointer",      
+                textDecoration: "underline"
+              }}
             >
-              <div className={styles.listItem}>
-                <div className={styles.title}>
-                  <h3>Photography</h3>
-                  <img src={openIcon} alt="open" 
-                    onClick={() => handleListClick("/portfolio/vaca")}
-                  />
-                </div>
-                <p>I own a film camera from the 70's and I enjoy photographing life around me.</p>
-              </div>
-            </li>
-            <li
-              onMouseEnter={() => handleImageEnter(photographyPreview)}
-              onMouseLeave={handleImageLeave}
-            >
-              <div className={styles.listItem}>
-                <div className={styles.title}>
-                  <h3>Music</h3>
-                  <img src={openIcon} alt="open" 
-                    onClick={() => handleListClick("/portfolio/vaca")}
-                  />
-                </div>
-                <p>I play guitar in a very small local band and mostly for myself.</p>
-              </div>
-            </li>
-          </ul>
+              Read more
+            </p>
+          </div>
+          
         </>,
         styles.cardGreen,
         "rgb(119, 253, 155)"
       )}
+      
+        <div className={styles.contactSection}>
+          <DraggableCard>
+            <p>Interested in collaborating?</p>
+          </DraggableCard>
+          <DraggableCard>
+            <p>
+              <a 
+                href="https://www.linkedin.com/in/victor-andrei-cretu-949b2822b/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+              >
+                Contact me!
+              </a>
+            </p>
+          </DraggableCard>
+        </div>
+      
       
 
 
@@ -530,6 +534,30 @@ export default function Cards() {
           }}
         />
       )}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        version="1.1"
+        className="svg-filters"
+        style={{ display: "none" }}
+        >
+        <defs>
+          <filter id="marker-shape">
+            <feTurbulence
+              type="fractalNoise"
+              baseFrequency="0 0.15"
+              numOctaves="1"
+              result="warp"
+            />
+            <feDisplacementMap
+              xChannelSelector="R"
+              yChannelSelector="G"
+              scale="30"
+              in="SourceGraphic"
+              in2="warp"
+            />
+          </filter>
+        </defs>
+    </svg>
     </div>
   );
 }

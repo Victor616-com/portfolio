@@ -170,9 +170,7 @@
   .videoWrapper {
     max-width: 300px;
   }
-  .card p {
-    font-size: 12px;
-  }
+  
   
 }
 @media (max-width: 370px) {

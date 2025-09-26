@@ -1,4 +1,6 @@
 import { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import styles from "../styles/BetterToDoPage.module.css";
 import ProjectHeader from "../components/ProjectHeader";
 import DraggableCard from "../components/DraggableCard";
@@ -8,14 +10,15 @@ import ProjectCard from "../components/ProjectCard";
 
 import headerImage1 from "../assets/images/betterToDo_header.png"
 import headerImage from "../assets/images/betterToDo_header.png"
-import collumnsTasksVideo from "../assets/images/betterToDo_addColumnsAndTasks.mov"
-import editCollumnVideo from "../assets/images/betterToDo_editCollumn.mov"
-import dragVideo from "../assets/images/betterToDo_drag.mov"
-import finalVideo from "../assets/images/betterToDo_final.mov"
+import collumnsTasksVideo from "../assets/images/betterToDo_addColumnsAndTasks.mp4"
+import editCollumnVideo from "../assets/images/betterToDo_editCollumn.mp4"
+import dragVideo from "../assets/images/betterToDo_drag.mp4"
+import finalVideo from "../assets/images/betterToDo_final.mp4"
 
 const BetterToDoPage = () => {
     const videoRef = useRef(null);
     const [isPlaying, setIsPlaying] = useState(true);
+    const navigate = useNavigate();
 
     const handleVideoClick = () => {
         const vid = videoRef.current;
@@ -166,8 +169,15 @@ const BetterToDoPage = () => {
                                 />
                             </div>
                         </DraggableCard>
-                       
-                        
+                    </ContentSection>
+                    <ContentSection>
+                        <DraggableCard >
+                            <h2 
+                                onClick={() => navigate("/portfolio/")}
+                                style={{ cursor: "pointer" }}
+                            >
+                                Go back home &lt; </h2>
+                        </DraggableCard>
                     </ContentSection>
                 </div>
             </div>
